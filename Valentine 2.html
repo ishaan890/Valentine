@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Valentine Invite 💕</title>
+
+  <!-- Confetti -->
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+
+  <!-- Google Font -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(135deg, #ffd6e8, #fff0f6);
+      height: 100vh;
+      overflow: hidden;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      color: #d63384;
+    }
+
+    .container {
+      background: rgba(255, 255, 255, 0.95);
+      padding: 30px;
+      border-radius: 30px;
+      box-shadow: 0 15px 40px rgba(0,0,0,0.15);
+      max-width: 90%;
+      position: relative;
+    }
+
+    h1 {
+      font-size: 2.2rem;
+      margin-bottom: 10px;
+    }
+
+    .countdown {
+      font-size: 1.1rem;
+      margin: 10px 0 20px;
+      color: #b5179e;
+      font-weight: 600;
+    }
+
+    .art {
+      display: flex;
+      justify-content: center;
+      gap: 15px;
+      margin-bottom: 15px;
+    }
+
+    .art img {
+      width: 70px;
+      animation: float 4s ease-in-out infinite;
+    }
+
+    @keyframes float {
+      0% { transform: translateY(0); }
+      50% { transform: translateY(-12px); }
+      100% { transform: translateY(0); }
+    }
+
+    .buttons {
+      margin-top: 25px;
+      position: relative;
+      height: 120px;
+    }
+
+    button {
+      border: none;
+      border-radius: 50px;
+      cursor: pointer;
+      transition: 0.3s ease;
+    }
+
+    #yesBtn {
+      background: #ff4d88;
+      color: white;
+      padding: 16px 45px;
+      font-size: 1.6rem;
+      font-weight: bold;
+      box-shadow: 0 6px 18px rgba(255, 77, 136, 0.6);
+    }
+
+    #yesBtn:hover {
+      transform: scale(1.15);
+    }
+
+    #noBtn {
+      background: #ffd1e6;
+      color: #a4133c;
+      padding: 10px 26px;
+      position: absolute;
+      right: 10%;
+      top: 65px;
+      font-size: 1rem;
+    }
+
+    .message {
+      display: none;
+      margin-top: 25px;
+      font-size: 1.4rem;
+      color: #c2185b;
+      animation: pop 0.6s ease;
+    }
+
+    @keyframes pop {
+      from { transform: scale(0.6); opacity: 0; }
+      to { transform: scale(1); opacity: 1; }
+    }
+
+    .music-note {
+      font-size: 0.9rem;
+      margin-top: 10px;
+      color: #888;
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- Background Music -->
+  <audio autoplay loop>
+    <source src="https://cdn.pixabay.com/audio/2022/03/15/audio_7c4e87c2c1.mp3" type="audio/mpeg">
+  </audio>
+
+  <div class="container">
+
+    <!-- Cute Illustrations -->
+    <div class="art">
+      <img src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExbmxwNm8zYTFxNHU4d2w1aHhnZXd5dnZrMnhybTNkN2Y5eXV4eXBzZCZlcD12MV9naWZzX3NlYXJjaCZjdD1n/xT9IgG50Fb7Mi0prBC/giphy.gif" alt="dolphin">
+      <img src="https://media.giphy.com/media/3oriO0OEd9QIDdllqo/giphy.gif" alt="sunflower">
+      <img src="https://media.giphy.com/media/26u4cqiYI30juCOGY/giphy.gif" alt="beach">
+    </div>
+
+    <h1>Will you be my Valentine,<br><strong>Kucchu?</strong> 💕</h1>
+
+    <div class="countdown" id="countdown"></div>
+
+    <div class="buttons">
+      <button id="yesBtn">YES 💗</button>
+      <button id="noBtn">No 🙈</button>
+    </div>
+
+    <div class="message" id="loveMsg">
+      💞 Thank you baby,<br>
+      I love you to the moon and back 🌙✨
+    </div>
+
+    <div class="music-note">🎵 Soft ocean vibes just for you</div>
+  </div>
+
+  <script>
+    const noBtn = document.getElementById("noBtn");
+    const yesBtn = document.getElementById("yesBtn");
+    const msg = document.getElementById("loveMsg");
+
+    noBtn.addEventListener("mouseover", () => {
+      const x = Math.random() * (window.innerWidth - 120);
+      const y = Math.random() * (window.innerHeight - 120);
+      noBtn.style.left = x + "px";
+      noBtn.style.top = y + "px";
+    });
+
+    yesBtn.addEventListener("click", () => {
+      msg.style.display = "block";
+      confetti({
+        particleCount: 250,
+        spread: 120,
+        origin: { y: 0.6 }
+      });
+    });
+
+    // Countdown to Valentine's Day
+    const countdownEl = document.getElementById("countdown");
+    const valentinesDate = new Date("Feb 14, 2026 00:00:00").getTime();
+
+    setInterval(() => {
+      const now = new Date().getTime();
+      const diff = valentinesDate - now;
+
+      if (diff < 0) {
+        countdownEl.innerHTML = "💖 It's Valentine's Day! 💖";
+        return;
+      }
+
+      const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+      const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
+      const minutes = Math.floor((diff / (1000 * 60)) % 60);
+
+      countdownEl.innerHTML =
+        `⏳ ${days} days ${hours} hrs ${minutes} mins to Valentine’s Day`;
+    }, 1000);
+  </script>
+
+</body>
+</html>
